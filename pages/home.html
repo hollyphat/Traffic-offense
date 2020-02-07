@@ -1,0 +1,87 @@
+<template>
+    <div class="page" data-name="chat-home">        
+        <div class="navbar">
+            <div class="navbar-inner">                
+                <div class="left">
+                    <a href="#" class="link icon-only panel-open" data-panel="left">
+                        <i class="icon f7-icons ios-only">menu</i>
+                        <i class="icon material-icons md-only">menu</i>
+                    </a>
+                </div>
+                <div class="title">Mobile FRSC</div>                
+        </div>
+
+        
+      </div>
+        <div class="page-content">
+            <div class="block-title">Welcome {{user_name}}</div>     
+
+                <div class="list links-list">
+                <ul>
+                  <li>
+                    <a href="/offense/" class=""> Offence Lists</a>
+                  </li>
+                  <li>
+                    <a href="/new/" class=""> New Offender</a>
+                  </li>
+                  <li>
+                    <a href="/offenders/" class="">Edit Offenders</a>
+                  </li>
+                  
+                  <li>
+                    <a href="/about/" class=""> About</a>
+                  </li>
+                  <li>
+                    <a href="#" class="logout "> Logout</a>
+                  </li>
+                  
+                </ul>
+              </div>           
+        </div>
+
+        
+    </div>
+
+</template>
+<script>
+    return {        
+        on: {
+            pageInit: function() {
+                var app = this.$app;
+                var $$ = this.$;                
+                var router = this.$router;        
+                var user_id = sessionStorage.getItem("user_id");
+
+                //console.log(user_id);
+                if(user_id == null){
+                    //console.log("I am here..");
+                    window.location = "index.html";
+                    return;
+                }
+
+                
+
+
+                
+                $(".logout").on("click",function(){
+                    app.dialog.confirm('Are you sure you want to logout?', function () {
+                        sessionStorage.removeItem("user_id");
+                        sessionStorage.removeItem("offence");
+                        sessionStorage.removeItem("name");                        
+                        mainView.router.navigate("/",{});
+                    });
+                });                                            
+                
+            }
+
+
+            
+
+        },
+        data: function () {        
+            return {
+                user_name: sessionStorage.getItem("name"),                
+            }
+        },
+    }
+</script>

@@ -1,0 +1,365 @@
+<template>
+  <div class="page" data-name="edit_offender">    
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Edit Offender</div>
+      <div class="right">
+          <a href="#" class="link edit-reg hide">
+              <i class="icon material-icons md-only">check</i>
+          </a>
+      </div>
+      
+    </div>
+  </div>
+  <div class="page-content">  
+
+
+     <!--upload-->
+
+            
+
+            <!--upload-->
+
+
+            <div class="">
+                <p>Enter the offender ID to view records</p>
+                <div class="list">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender ID</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" placeholder="Offender ID" required validate id="reg-id">
+                                    
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-input-wrap">
+                                <div class="row">
+                                    <a href="" class="button button-outline btn-fetch col">Fetch Details</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul class="hide res" style="margin-top: 30px;">                        
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender Name</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" placeholder="Offender name" required validate id="reg-name">
+                                    
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender Phone Number</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="reg-phone" placeholder="Enter phone number" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender Address</div>
+                                <div class="item-input-wrap">
+                                  <textarea class="resizable" name="" id="address" placeholder="Offender Address"></textarea>
+                                </div>
+                            </div>
+                        </li>
+
+                        
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Licence Number</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="" id="licence-no" placeholder="Licence Number">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Plate Number</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="" id="plate-no" placeholder="Plate Number">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offence</div>
+                                <div class="item-input-wrap" >
+                                  <input type="text" name="" id="offence_infos" disabled="">
+                                </div>
+                            </div>
+                        </li>
+                        
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Gender</div>
+                                <div class="item-input-wrap input-dropdown-wrap">
+                                    <select placeholder="Please choose..." id="reg-gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Comments</div>
+                                <div class="item-input-wrap">
+                                  <textarea class="resizable" name="" id="comments" placeholder="Your Comments"></textarea>
+                                  <input type="hidden" name="images" id="reg-image">
+                                </div>
+                            </div>
+                        </li>
+                                                
+
+                        
+
+                    </ul>
+                </div>
+
+
+
+
+              
+      
+  </div>
+</div>
+</template>
+
+<script>
+    return {        
+        on: {
+            pageInit: function() {
+                var app = this.$app;
+                var $$ = this.$;                
+                var router = this.$router;   
+
+                var router = this.$router;        
+                var user_id = sessionStorage.getItem("user_id");
+
+                //console.log(user_id);
+                if(user_id == null){
+                    //console.log("I am here..");
+                    window.location = "index.html";
+                    return;
+                }            
+
+
+                $(".btn-fetch").on("click",function(eee){
+                    $(".edit-reg").addClass("hide");
+                    $(".res").addClass("hide");
+                    var reg_id = $("#reg-id").val();
+                    if(reg_id == ""){
+                        var toasts = app.toast.create({
+                            text: 'Kindly enter the registration id registered by you',
+                            position: 'center',
+                            closeTimeout: 3000
+                        });
+
+                        toasts.open();
+
+                        vibration();
+
+                        return;
+                    }
+
+                    app.dialog.preloader("Fetching offender Information!");
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        timeout: 30000,
+                        data: {
+                            'offence_details': '',
+                            'code': reg_id,
+                            'user_id': sessionStorage.getItem("user_id")
+                        },
+                        error: function(er){
+                            console.log(er);
+                            app.dialog.close();
+                            var toasts = app.toast.create({
+                                text: 'Network error, please ensure that you have active internet connections!',
+                                position: 'center',
+                                closeTimeout: 3000
+                            });
+                            toast.open();
+                            vibration();
+                        },
+                        success: function(f){
+                            app.dialog.close();
+                            if(f.total == 0){
+                                var toasts = app.toast.create({
+                                    text: "Invalid Offender Id!",
+                                    position: 'center',
+                                    closeTimeout: 3000
+                                });
+                                toasts.open();
+                                vibration();
+                            }else{
+                                $("#reg-name").val(f.record.offender_name);
+                                $("#reg-phone").val(f.record.phone);
+                                $("#reg-gender").val(f.record.gender);
+                                $("#offence_infos").val(f.record.offence_name+" / "+f.record.fees);
+                                $("#licence-no").val(f.record.licence_number);
+                                $("#plate-no").val(f.record.plate_number);
+                                $("#address").val(f.record.address);
+                                $("#comments").val(f.record.comment);
+
+                                $(".edit-reg").removeClass("hide");
+                                $(".res").removeClass("hide");
+
+                                $("#reg-id").attr("disabled",true);
+                            }
+                        }
+                    });
+                });
+
+
+
+
+
+
+                
+
+
+
+                $(".edit-reg").on("click",function(ee){
+                  ee.preventDefault();
+                  //DECLARE VARS
+                  var name = $("#reg-name").val();
+                  
+                  var licence = $("#licence-no").val();
+                  var plate = $("#plate-no").val();
+                  var user_id = sessionStorage.getItem("user_id");
+                  var comment = $("#comments").val();
+                  var phone = $("#reg-phone").val();                  
+                  var address = $("#address").val();
+                  var gender = $("#reg-gender").val();
+
+                  var code = $("#reg-id").val();
+
+
+
+                  if(name == "" || comment == "" || phone == "" || address == "" ){
+                      var toasts = app.toast.create({
+                            text: 'Kindly fill all required fields',
+                            position: 'center',
+                            closeTimeout: 3000
+                        });
+
+                        toasts.open();
+
+                        vibration();
+
+                        return;
+                    }
+
+
+                    app.dialog.preloader('Updating Offender Information');
+                    $.ajax({
+                       url: url,
+                       type: 'post',
+                       dataType: 'json',
+                       crossDomain: true,
+                       timeout: 45000,
+                       data: {
+                           'edit-ok': '',
+                           'name': name,                           
+                           'user_id': user_id,
+                           'licence': licence,
+                           'plate': plate,                           
+                           'gender': gender,                           
+                           'address': address,
+                           'comment': comment,
+                           'phone': phone,
+                           'code': code
+                       },
+                        success: function (f) {
+                           //console.log(f);
+                           app.dialog.close();
+
+                           $("#reg-id").attr("disabled",false);
+                           //$("#reg-id").removeAttr()
+                            if(f.ok == 1){
+                                $("#plate-no").val("");
+                                $("#licence-no").val("");
+                                $("#address").val("");
+                                $("#comments").val("");
+                                $("#reg-phone").val("");
+                                $("#reg-name").val("");
+                                
+
+
+                                
+                                var t = app.toast.create({
+                                    text: f.msg,
+                                    position: 'center',
+                                    closeTimeout: 3000
+                                }).open();
+
+                                $("#reg-id").val('');
+                                $(".res").addClass("hide");
+                                $(".edit-reg").addClass("hide");
+                                        
+                                    window.open(f.htmls);
+                                    // It end here
+
+
+                                
+                            }else{
+                                var t = app.toast.create({
+                                text: f.msg,
+                                position: 'center',
+                                closeTimeout: 3000
+                                }).open();
+                            }
+
+                            
+                        },
+                        error: function (e) {
+                           app.dialog.close();
+                           console.log(e);
+                           app.toast.create({
+                               text: 'Network error, please ensure that you have active internet connections!',
+                               position: 'center',
+                               closeTimeout: 3000
+                           }).open();
+                           vibration();
+
+                        }
+                    });
+                });
+                                 
+            }
+        },
+        data: function () {               
+                 
+        },
+
+        methods: {
+        
+      }
+        
+    }
+</script>

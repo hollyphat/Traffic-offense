@@ -1,0 +1,156 @@
+<template>
+  <div class="page" data-name="find_friends">
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Search Herbs</div>
+      <div class="right">
+        <a href="#" class="link find-friends">
+              <i class="icon material-icons md-only">search</i>
+          </a>
+      </div>
+    </div>
+  </div>
+  <div class="page-content">    
+      
+      <div class="block-title">Search Herbs</div>
+        <div class="blocks">
+          <p class="padding">
+            Enter herb name or disease name!
+          </p>
+            <div class="list">
+                <ul>
+                    <li class="item-content item-input item-input-with-value">                        
+                        <div class="item-inner">
+                            <div class="item-title item-label">Search Query</div>
+                            <div class="item-input-wrap">
+                                <input type="text" required validate placeholder="Search Query (Separated by space)" id="q" class="input-with-value">                                
+                            </div>
+                        </div>
+                    </li>                            
+                </ul>
+            </div>
+
+            <div class="output hide">
+            <div class="block-title">Search Result</div>
+              <div class="list search-res">
+                
+              </div>
+        </div>
+    </div>
+  <!-- </div> -->
+</div>
+</template>
+
+<script>
+    return {        
+        on: {
+            pageInit: function() {
+                var app = this.$app;
+                var $$ = this.$;                
+                var router = this.$router;        
+                var user_id = sessionStorage.getItem("user_id");
+                if((user_id === "") || (user_id === null)){
+                    
+                    mainView.router.navigate('/login/');
+                }
+
+                //FIND FRIENDS
+                $("body").on("click",".find-friends",function(e){
+                  e.preventDefault();                  
+                  var q = $("#q").val();
+
+                  if(q == ""){
+                    var toasts = app.toast.create({
+                        text: 'Kindly enter a search query',
+                        position: 'bottom',
+                        closeTimeout: 3000
+                    });                        
+                      toasts.open();
+                      vibration();
+                      return;
+                    }
+                    $(".output").addClass("hide");
+
+                    app.preloader.show();
+
+                    $.ajax({
+                      url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        crossDomain: true,
+                        timeout: 45000,
+                        data: {
+                            'load_search': '',                            
+                            'q': q
+                        },
+                        success: function(f){
+                          //console.log(f);
+                          app.preloader.hide();
+                          if(f.total == 0){
+                            var toasts = app.toast.create({
+                            text: 'No result found!',
+                            position: 'bottom',
+                            closeTimeout: 3000
+                        });                        
+                          toasts.open();
+                          vibration();
+                          return;
+                          }
+                          var ff = f.herbs;
+                          var html ='<ul>';
+                          for(var i = 0; i <ff.length; i++){
+                            var names = ff[i].title;
+                            var id = ff[i].id;
+                            html += '<li><a href="/view-herb/?name='+names+'&id='+id+'" class="item-link item-content">';
+                            html += '<div class="item-inner"><div class="item-title">';
+                            html += ff[i].title;
+                            html += '</div><div class="item-after">View</div></div></a></li>';
+                          }
+
+                          html += '</ul>';
+
+                          $(".search-res").html(html);
+                          $(".output").removeClass("hide");
+                          
+                        },
+                        error: function(er){
+                          //console.log(er.responseText);
+                          var toasts = app.toast.create({
+                            text: 'Network error, please try again!',
+                            position: 'bottom',
+                            closeTimeout: 3000
+                        });                        
+                          toasts.open();
+                          vibration();
+                          app.preloader.hide();
+                        }
+                    });
+                });
+
+                /*$(".user-img").attr("src",server_upload_url+""+app_path+"users/thumb/"+sessionStorage.getItem("image"));
+                $(".user-name").html(sessionStorage.getItem("username"));
+                $(".user-status").html(sessionStorage.getItem("bio"));*/
+            }
+        },
+        data: function () {               
+     
+            return {                
+                user_name: sessionStorage.getItem("name"),
+                email: sessionStorage.getItem("email"),
+                phone: sessionStorage.getItem("phone"),
+                gender: sessionStorage.getItem("gender"),                
+            }
+        },
+
+        methods: {
+        
+      }
+        
+    }
+</script>

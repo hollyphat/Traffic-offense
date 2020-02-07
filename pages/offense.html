@@ -1,0 +1,58 @@
+<template>
+  <div class="page" data-name="offense">
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Offence Lists</div>
+      
+    </div>
+  </div>
+  <div class="page-content">    
+      <h3 class="block-title">Offence Lists</h3>      
+      
+      <div class="list offense-res">
+        
+      </div>
+  </div>
+</div>
+</template>
+
+<script>
+    return {        
+        on: {
+            pageInit: function() {
+                var app = this.$app;
+                var $$ = this.$;                
+                var router = this.$router;    
+
+
+
+                var ff = JSON.parse(sessionStorage.getItem("offence"));
+                var html ='<ul>';
+                for(var i = 0; i <ff.length; i++){
+                  html += '<li><a href="#" class="item-link item-content">';
+                  html += '<div class="item-inner"><div class="item-title">';
+                  html += ff[i].name;
+                  html += '</div><div class="item-after">&#8358; '+ff[i].fee+'</div></div></a></li>';
+                }
+
+                html += '</ul>';
+
+                $(".offense-res").html(html);                  
+            }
+        },
+        data: function () {               
+                 
+        },
+
+        methods: {
+        
+      }
+        
+    }
+</script>

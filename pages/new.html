@@ -1,0 +1,427 @@
+<template>
+  <div class="page" data-name="new_offender">
+    <div class="fab fab-right-center">
+        <a href="#" class="finish-reg color-teal">
+            <i class="icon material-icons md-only color-white">check</i>
+        </a>
+    </div>
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">New Offender</div>
+      <div class="right">
+          <a href="#" class="link finish-reg">
+              <i class="icon material-icons md-only">check</i>
+          </a>
+      </div>
+      
+    </div>
+  </div>
+  <div class="page-content">  
+
+
+     <!--upload-->
+
+            <script type="text/template" id="qq-template-manual-trigger">
+                <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="">
+                    <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+                        <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+                    </div>
+                    <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+                        <span class="qq-upload-drop-area-text-selector"></span>
+                    </div>
+                    <div class="buttons">
+                        Offender Picture
+                        <div class="center" align="center">
+                            <i class="qq-upload-button-selector qq-upload-button button button-fill" id="up-btns"> <i class="material-icons">add_a_photo</i>Upload Offender Picture</i>
+                        </div>
+
+                        <button type="button" id="trigger-upload" class="button button-raised hide">
+                            Upload
+                        </button>
+                    </div>
+                    <span class="qq-drop-processing-selector qq-drop-processing">
+                            <span>Processing dropped files...</span>
+                    <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+                    </span>
+                    <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
+                        <li>
+                            <div class="qq-progress-bar-container-selector">
+                                <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                            </div>
+                            <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                            <img class="qq-thumbnail-selector" qq-max-size="100" qq-server-scale>
+                            <span class="qq-upload-file-selector qq-upload-file"></span>
+                            <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+                            <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+                            <span class="qq-upload-size-selector qq-upload-size"></span>
+                            <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
+                            <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
+                            <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+                            <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                        </li>
+                    </ul>
+
+                    <dialog class="qq-alert-dialog-selector">
+                        <div class="qq-dialog-message-selector"></div>
+                        <div class="qq-dialog-buttons">
+                            <button type="button" class="qq-cancel-button-selector">Close</button>
+                        </div>
+                    </dialog>
+
+                    <dialog class="qq-confirm-dialog-selector">
+                        <div class="qq-dialog-message-selector"></div>
+                        <div class="qq-dialog-buttons">
+                            <button type="button" class="qq-cancel-button-selector">No</button>
+                            <button type="button" class="qq-ok-button-selector">Yes</button>
+                        </div>
+                    </dialog>
+
+                    <dialog class="qq-prompt-dialog-selector">
+                        <div class="qq-dialog-message-selector"></div>
+                        <input type="text">
+                        <div class="qq-dialog-buttons">
+                            <button type="button" class="button button-raised qq-cancel-button-selector">Cancel</button>
+                            <button type="button" class="button button-raised qq-ok-button-selector">Ok</button>
+                        </div>
+                    </dialog>
+                </div>
+            </script>
+
+            <style>
+                #trigger-upload {
+                    color: white;
+                    background-color: #00897b;
+                    font-size: 14px;
+                    padding: 7px 20px;
+                    background-image: none;
+                }
+                
+                #fine-uploader-manual-trigger .buttons {
+                    width: 100%;
+                }
+                
+                #fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container {
+                    width: 100%;
+                }
+
+                .md .list ul ul {
+                    padding-left: 0;
+                }
+            </style>
+
+            <!--upload-->
+
+
+            <div class="">
+                <div class="list">
+                    <ul>
+                        <div id="fine-uploader-manual-trigger"></div>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender Name</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" placeholder="Offender name" required validate id="reg-name">
+                                    
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender Phone Number</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" id="reg-phone" placeholder="Enter phone number" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offender Address</div>
+                                <div class="item-input-wrap">
+                                  <textarea class="resizable" name="" id="address" placeholder="Offender Address"></textarea>
+                                </div>
+                            </div>
+                        </li>
+
+                        
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Licence Number</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="" id="licence-no" placeholder="Licence Number">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Plate Number</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="" id="plate-no" placeholder="Plate Number">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Offence</div>
+                                <div class="item-input-wrap input-dropdown-wrap" >
+                                  <select id="offence-info" >
+                                    <option value="Offence"></option>
+                                  </select>
+                                </div>
+                            </div>
+                        </li>
+                        
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Gender</div>
+                                <div class="item-input-wrap input-dropdown-wrap">
+                                    <select placeholder="Please choose..." id="reg-gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Comments</div>
+                                <div class="item-input-wrap">
+                                  <textarea class="resizable" name="" id="comments" placeholder="Your Comments"></textarea>
+                                  <input type="hidden" name="images" id="reg-image">
+                                </div>
+                            </div>
+                        </li>
+                                                
+
+                        
+
+                    </ul>
+                </div>
+
+
+
+
+              
+      
+  </div>
+</div>
+</template>
+
+<script>
+    return {        
+        on: {
+            pageInit: function() {
+                var app = this.$app;
+                var $$ = this.$;                
+                var router = this.$router;   
+
+                var router = this.$router;        
+                var user_id = sessionStorage.getItem("user_id");
+
+                //console.log(user_id);
+                if(user_id == null){
+                    //console.log("I am here..");
+                    window.location = "index.html";
+                    return;
+                }
+
+
+                var offence_lists = JSON.parse(sessionStorage.getItem("offence"));
+
+                var select = "";
+                for(var i = 0; i < offence_lists.length; i++){
+                  var idd = offence_lists[i].id;
+                  select += "<option value='"+idd+"'>"+offence_lists[i].name+" / &#8358; "+offence_lists[i].fee+"</option>";
+                }
+
+                $("#offence-info").html(select);
+
+
+
+
+
+
+                var manualUploader = new qq.FineUploader({
+                    element: document.getElementById('fine-uploader-manual-trigger'),
+                    template: 'qq-template-manual-trigger',
+                    request: {
+                        endpoint: server_upload_url + 'upload.php',
+                        params: {
+                            'project': 'frsc',
+                            'folder': 'offenders'
+                        }
+                    },
+                    thumbnails: {
+                        placeholders: {
+                            waitingPath: 'lib/upload/waiting-generic.png',
+                            notAvailablePath: 'lib/upload/not_available-generic.png'
+                        }
+                    },
+                    validation: {
+                        allowedExtensions: ['jpeg', 'jpg', 'png'],
+                        itemLimit: 1,
+                        sizeLimit: 2097152 // 50 kB = 50 * 1024 bytes
+                    },
+                    autoUpload: true,
+                    debug: false,
+                    callbacks: {
+                        onComplete: function(id, name, responseJSON, xhr) {
+                            var image_name = (responseJSON.image_name);
+                            $("[name=images]").val(image_name);
+                            //console.log(responseJSON);
+                            //manualUploader.reset();
+                        }
+                    }
+                });
+
+                qq(document.getElementById("trigger-upload")).attach("click", function() {
+                    manualUploader.uploadStoredFiles();
+                });
+
+
+
+                $(".finish-reg").on("click",function(ee){
+                  ee.preventDefault();
+                  //DECLARE VARS
+                  var name = $("#reg-name").val();
+                  var offence_id = $("#offence-info").val();
+                  var licence = $("#licence-no").val();
+                  var plate = $("#plate-no").val();
+                  var user_id = sessionStorage.getItem("user_id");
+                  var comment = $("#comments").val();
+                  var phone = $("#reg-phone").val();
+                  var image = $("#reg-image").val();
+                  var address = $("#address").val();
+                  var gender = $("#reg-gender").val();
+
+
+
+                  if(name == "" || offence_id == "" || comment == "" || phone == "" || address == "" || image == ""){
+                      var toasts = app.toast.create({
+                            text: 'Kindly fill all required fields',
+                            position: 'center',
+                            closeTimeout: 3000
+                        });
+
+                        toasts.open();
+
+                        vibration();
+
+                        return;
+                    }
+
+
+                    app.dialog.preloader('Submitting Offender Information');
+                    $.ajax({
+                       url: url,
+                       type: 'post',
+                       dataType: 'json',
+                       crossDomain: true,
+                       timeout: 45000,
+                       data: {
+                           'add-ok': '',
+                           'name': name,
+                           'offence_id': offence_id,
+                           'user_id': user_id,
+                           'licence': licence,
+                           'plate': plate,                           
+                           'gender': gender,                           
+                           'address': address,
+                           'comment': comment,
+                           'image': image,
+                           'phone': phone
+                       },
+                        success: function (f) {
+                           //console.log(f);
+                           app.dialog.close();
+
+                            if(f.ok == 1){
+                                $("#plate-no").val("");
+                                $("#licence-no").val("");
+                                $("#address").val("");
+                                $("#comments").val("");
+                                $("#reg-phone").val("");
+                                $("#reg-name").val("");
+                                
+
+                                //$(".qq-upload-list-selector").html('');
+                                $("#reg-image").val("");
+                                manualUploader.reset();
+
+                                var t = app.toast.create({
+                                text: f.msg,
+                                position: 'center',
+                                closeTimeout: 3000
+                                }).open();
+
+
+                                        // Our code start here
+
+                                          /*var opts = {
+
+                                              type: "share",         //Open a context menu and ask the user what to do next (print, mail, etc..).
+                                              fileName: 'Tods-Report-'+f.codes+'.pdf' //it will use this filename as a place-holder
+
+                                          }
+
+                                          navigator.pdf.fromData(f.htmls, opts)
+
+                                          .then((status) => console.log('success->', status))
+
+                                          .catch((error) => console.log(error));
+*/
+                                    window.open(f.htmls);
+                                    //PDFViewer.showPDF(f.htmls);
+                                    // It end here
+
+
+                                
+                            }else{
+                                var t = app.toast.create({
+                                text: f.msg,
+                                position: 'center',
+                                closeTimeout: 3000
+                                }).open();
+                            }
+
+                            
+                        },
+                        error: function (e) {
+                           app.dialog.close();
+                           console.log(e);
+                           app.toast.create({
+                               text: 'Network error, please ensure that you have active internet connections!',
+                               position: 'center',
+                               closeTimeout: 3000
+                           }).open();
+                           vibration();
+
+                        }
+                    });
+                });
+                                 
+            }
+        },
+        data: function () {               
+                 
+        },
+
+        methods: {
+        
+      }
+        
+    }
+</script>

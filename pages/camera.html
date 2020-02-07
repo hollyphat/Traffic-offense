@@ -1,0 +1,84 @@
+<template>
+  <div class="page" data-name="find_friends">
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Camera and Files</div>
+      
+    </div>
+  </div>
+  <div class="page-content">    
+      <h3 class="center">Camera App</h3>      
+
+      <div class="block">
+        <div class="row">
+          <a href="#" class="button button-outline col" id="btn-cam">Camera</a>
+          <a href="#" class="button button-outline col" id="btn-gall">Gallery</a>
+        </div>
+      </div>
+  </div>
+</div>
+</template>
+
+<script>
+    return {        
+        on: {
+            pageInit: function() {
+                var app = this.$app;
+                var $$ = this.$;                
+                var router = this.$router;        
+                
+
+                $$(document).on('deviceready ', function(){
+                  /*console.log(navigator.camera);
+                    //navigator.camera.cleanup(onSuccess, onFail);
+                    navigator.camera.getPicture(onSuccess, onFail, Camera.PictureSourceType.CAMERA);
+                    function onSuccess() {
+                        console.log("Camera cleanup success.")
+                    }
+                     
+                    function onFail(message) {
+                        alert('Failed because: ' + message);
+                    }*/
+                });
+
+
+                document.addEventListener('deviceready', onDeviceReady.bind(this), false);
+                  function onDeviceReady() {   
+                      document.addEventListener("deviceready", onDeviceReady, false);
+
+                      console.log(navigator.camera);
+                    //navigator.camera.cleanup(onSuccess, onFail);
+                    navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+    destinationType: Camera.DestinationType.DATA_URL
+});
+                    function onSuccess() {
+                        console.log("Camera cleanup success.")
+                    }
+                     
+                    function onFail(message) {
+                        alert('Failed because: ' + message);
+                    }
+                    
+                  };
+
+
+
+                
+            }
+        },
+        data: function () {               
+                 
+        },
+
+        methods: {
+        
+      }
+        
+    }
+</script>
