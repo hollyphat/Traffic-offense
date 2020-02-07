@@ -20,7 +20,7 @@ if(env == "local"){
 }else{
     base_url = "https://projects.onlinemedia.com.ng/frsc";
     url = 'https://projects.onlinemedia.com.ng/frsc/api.php';
-    server_upload_url = "https://cdn.uwansell.com.ng/apps/";
+    server_upload_url = "https://cdn.onlinemedia.com.ng/";
 }
 
 app_path = "frsc/";
